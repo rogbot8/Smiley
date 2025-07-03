@@ -30,11 +30,26 @@ window.addEventListener('DOMContentLoaded', () => {
     ctx.fill();
 
     // Smile/Frown
-    const mood = moodMap[moodValue];
-    ctx.beginPath();
-    ctx.arc(150, mood.offsetY, 50, 0, Math.PI, mood.flip);
-    ctx.stroke();
-  }
+const mood = parseInt(moodValue);
+ctx.beginPath();
+
+if (mood === 2) {
+  // Neutral: draw a straight line
+  ctx.moveTo(100, 180);
+  ctx.lineTo(200, 180);
+} else {
+  const moodSettings = {
+    0: { y: 190, flip: true },   // Deep frown
+    1: { y: 180, flip: true },   // Frown
+    3: { y: 160, flip: false },  // Smile
+    4: { y: 150, flip: false }   // Big smile
+  };
+  const { y, flip } = moodSettings[mood];
+  ctx.arc(150, y, 50, 0, Math.PI, flip);
+}
+
+ctx.stroke();
+
 
   // Initial draw
   drawFace(moodSlider.value);
