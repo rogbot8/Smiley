@@ -4,7 +4,8 @@ const ctx = canvas.getContext('2d');
 // Face
 ctx.beginPath();
 ctx.arc(150, 150, 100, 0, Math.PI * 2); // x, y, radius
-ctx.fillStyle = '#FFEB3B';
+ctx.fillStyle = '#4CAF50'; // a nice leafy green
+
 ctx.fill();
 ctx.stroke();
 
