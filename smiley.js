@@ -1,34 +1,45 @@
-const canvas = document.getElementById('smiley');
-const ctx = canvas.getContext('2d');
-const slider = document.getElementById('hueSlider');
+window.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('smiley');
+  const ctx = canvas.getContext('2d');
+  const moodSlider = document.getElementById('moodSlider');
 
-function drawFace(hue) {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Mapping moods to arc offsets
+  const moodMap = {
+    0: { offsetY: 190, flip: true },   // Deep frown
+    1: { offsetY: 180, flip: true },   // Frown
+    2: { offsetY: 170, flip: false },  // Neutral
+    3: { offsetY: 160, flip: false },  // Smile
+    4: { offsetY: 150, flip: false }   // Big smile
+  };
 
-  // Face
-  ctx.beginPath();
-  ctx.arc(150, 150, 100, 0, Math.PI * 2);
-  ctx.fillStyle = `hsl(${hue}, 80%, 60%)`;
-  ctx.fill();
-  ctx.stroke();
+  function drawFace(moodValue) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Eyes
-  ctx.beginPath();
-  ctx.arc(110, 120, 10, 0, Math.PI * 2);
-  ctx.arc(190, 120, 10, 0, Math.PI * 2);
-  ctx.fillStyle = '#000';
-  ctx.fill();
+    // Face
+    ctx.beginPath();
+    ctx.arc(150, 150, 100, 0, Math.PI * 2);
+    ctx.fillStyle = 'hsl(90, 80%, 60%)';
+    ctx.fill();
+    ctx.stroke();
 
-  // Smile
-  ctx.beginPath();
-  ctx.arc(150, 160, 50, 0, Math.PI);
-  ctx.stroke();
-}
+    // Eyes
+    ctx.beginPath();
+    ctx.arc(110, 120, 10, 0, Math.PI * 2);
+    ctx.arc(190, 120, 10, 0, Math.PI * 2);
+    ctx.fillStyle = '#000';
+    ctx.fill();
 
-// Initial draw
-drawFace(slider.value);
+    // Smile/Frown
+    const mood = moodMap[moodValue];
+    ctx.beginPath();
+    ctx.arc(150, mood.offsetY, 50, 0, Math.PI, mood.flip);
+    ctx.stroke();
+  }
 
-// Live update when slider moves
-slider.addEventListener('input', () => {
-  drawFace(slider.value);
+  // Initial draw
+  drawFace(moodSlider.value);
+
+  moodSlider.addEventListener('input', () => {
+    drawFace(moodSlider.value);
+  });
 });
