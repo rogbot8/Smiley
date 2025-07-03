@@ -1,40 +1,33 @@
-window.addEventListener('DOMContentLoaded', () => {
-  const canvas = document.getElementById('smiley');
-  const ctx = canvas.getContext('2d');
-  const moodSlider = document.getElementById('moodSlider');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Expressive Smiley</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #f0f0f0;
+      font-family: sans-serif;
+    }
+    canvas {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+    }
+    label {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <label>
+    Mood:
+    <input type="range" id="moodSlider" min="0" max="4" step="1" value="2">
+  </label>
+  <canvas id="smiley" width="300" height="300"></canvas>
 
-  function drawFace(mood) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Face
-    ctx.beginPath();
-    ctx.arc(150, 150, 100, 0, Math.PI * 2);
-    ctx.fillStyle = 'hsl(90, 80%, 60%)'; // green face
-    ctx.fill();
-    ctx.stroke();
-
-    // Eyes
-    ctx.beginPath();
-    ctx.arc(110, 120, 10, 0, Math.PI * 2);
-    ctx.arc(190, 120, 10, 0, Math.PI * 2);
-    ctx.fillStyle = '#000';
-    ctx.fill();
-
-    // Smile or Frown
-    ctx.beginPath();
-    const arcY = 170 - 20 * mood; // Moves the smile up or down
-    const startAngle = 0;
-    const endAngle = Math.PI;
-
-    ctx.arc(150, arcY, 50, startAngle, endAngle, mood < 0); // flip if frowning
-    ctx.stroke();
-  }
-
-  // Initial draw
-  drawFace(moodSlider.value);
-
-  // Update on slider change
-  moodSlider.addEventListener('input', () => {
-    drawFace(parseFloat(moodSlider.value));
-  });
-});
+  <script src="smiley.js"></script>
+</body>
+</html>
